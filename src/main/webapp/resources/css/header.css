@@ -1,0 +1,99 @@
+.header
+{
+	width: 100%;
+	height: 50px;
+	background-color: #1987cb;
+}
+
+.header ul
+{
+	list-style: none;
+}
+
+.header ul li
+{
+	float: right;
+	margin-left: 2%;
+	height: 50px;
+	display: flex;
+    align-items: center;
+	padding: 1%;
+}
+
+.header ul li:hover
+{
+	background-color: #1FAAFF;
+}
+
+.header ul li a
+{
+	color: white;
+}
+
+-
+
+.foodplansNavigation
+{
+	width: 100%;
+	height: 50px;
+	background-color: #1987cb;
+}
+
+.foodplansNavigation ul
+{
+	list-style: none;
+	height: 100%;
+}
+
+.foodplansNavigation ul li
+{
+	float: left;
+	margin-left: 2%;
+	height: 100%;
+	display: flex;
+    align-items: center;
+	padding: 1%;
+	width:10%;
+	text-align:center;
+	margin-bottom: 0!important;
+}
+
+.foodplansNavigation ul li:hover
+{
+	background-color: #1FAAFF;
+}
+
+.foodplansNavigation ul li a
+{
+	color: white;
+}
+
+.title
+{
+	width: 30%;
+	color:white;
+	font-size: 16pt;
+}
+
+.header form
+{
+	float: right;
+	margin-right: 2%;
+	width: 70%;
+}
+
+.navigation
+{
+	width: 70%;
+
+}
+
+#headerTime {
+  background-color: #1987cb;
+  width: 25%;
+  border-radius: 0 0 15px 15px;
+  position: relative;
+  color: #ffffff;
+  text-align: center;
+  margin-left: 38%;
+}

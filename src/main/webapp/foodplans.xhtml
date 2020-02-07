@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet name="milligram.css" library="css"></h:outputStylesheet>
+	<h:outputStylesheet name="normalize.css" library="css"></h:outputStylesheet>
+	<h:outputStylesheet name="style.css" library="css"></h:outputStylesheet>
+	<h:outputStylesheet name="header.css" library="css"></h:outputStylesheet>
+	<h:outputScript name="timer.js" library="js"></h:outputScript>
+	<ui:insert name="css" />
+	<title>#{msg.general_title}</title>
+</h:head>
+
+<h:body>
+	<h:panelGroup layout="block" id="foodplanBox" styleClass="card">
+		<h:panelGroup layout="block" styleClass="CardHeader foodplanHeader">#{general_title_foodplan}</h:panelGroup>
+		<h:panelGroup layout="block" class="foodplansNavigation">
+			<h:form style="margin-bottom: 0px">
+				<ul>
+					<li>
+						<h:commandLink
+							action="#{foodplanManagedBean.setImage('busche.pdf')}"
+							value="#{msg.foodservice_busche}" />
+
+					</li>
+					<li>
+						<h:commandLink
+							action="#{foodplanManagedBean.setImage('Grieche.pdf')}"
+							value="#{msg.foodservice_griechisch}" />
+
+					</li>
+					<li>
+						<h:commandLink
+							action="#{foodplanManagedBean.setImage('Culinaria.pdf')}"
+							value="#{msg.foodservice_culinara}" />
+
+					</li>
+
+					<li>
+
+						<h:commandLink
+							action="#{foodplanManagedBean.setImage('döner.pdf')}"
+							value="#{msg.foodservice_doener}" />
+					</li>
+					<li>
+
+						<h:commandLink
+							action="#{foodplanManagedBean.setImage('entenhaus.pdf')}"
+							value="#{msg.foodservice_china}" />
+					</li>
+					<li>
+
+						<h:commandLink
+							action="#{foodplanManagedBean.setImage('marco.pdf')}"
+							value="#{msg.foodservice_pizza}" />
+					</li>
+					
+
+				</ul>
+			</h:form>
+		</h:panelGroup>
+		<h:panelGroup layout="block" class="foodplanImage"
+			rendered="#{not empty foodplanManagedBean.image}">
+			<iframe
+				src="#{foodplanManagedBean.serverAdress}/img/#{foodplanManagedBean.image}"
+				class="foodplanFrame" />
+
+		</h:panelGroup>
+	</h:panelGroup>
+</h:body>
+</html>

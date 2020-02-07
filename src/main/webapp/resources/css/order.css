@@ -1,0 +1,90 @@
+@charset "ISO-8859-1";
+.orderCard {
+  text-align: center;
+  width: 100%;
+  margin: 0px auto;
+}
+.inputFieldOrder {
+  outline: none;
+  width: 100%;
+  background-color: #fcfcfc;
+  border: none;
+  border-bottom: 1px solid #757575;
+  height: 100%;
+  font-size: 16pt;
+}
+.inputFieldOrder:FOCUS {
+  background-color: white;
+}
+#addOrderForm {
+  width: 100%;
+  float: left;
+  margin-left: 2%;
+}
+#foodplan {
+  width: 48%;
+  float: right;
+  height: 700px;
+}
+#foodplan iframe {
+  border: none;
+  height: 100%;
+  width: 100%;
+}
+@media (max-width: 1100px) {
+  #foodplan {
+    width: 100%;
+  }
+}
+#foodplay img {
+  height: 100%;
+  width: 100%;
+}
+.addButton {
+  width: 100%;
+  margin-left: 10px;
+}
+.orderTable {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  padding-right: 2%;
+}
+.orderTable td {
+  padding: 10px;
+  padding-left: 0;
+  text-align: left;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.orderTable thead {
+  border-bottom: 1px solid #757575;
+}
+.orderTable tbody tr:HOVER {
+  background-color: rgba(166, 162, 154, 0.3);
+}
+.orderTableHeader {
+  width: 25%;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+.formContainer {
+  width: 50%;
+  float: left;
+}
+@media (max-width: 1100px) {
+  .formContainer {
+    width: 100%;
+  }
+}
+.attachedFoodPlan {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+@media (max-width: 1100px) {
+  .attachedFoodPlan {
+    display: block;
+  }
+}

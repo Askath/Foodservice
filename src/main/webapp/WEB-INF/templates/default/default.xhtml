@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<h:outputStylesheet name="milligram.css" library="css"></h:outputStylesheet>
+	<h:outputStylesheet name="normalize.css" library="css"></h:outputStylesheet>
+	<h:outputStylesheet name="style.css" library="css"></h:outputStylesheet>
+	<h:outputStylesheet name="header.css" library="css"></h:outputStylesheet>
+	<h:outputStylesheet name="order.css" library="css"></h:outputStylesheet>
+	<h:outputScript name="timer.js" library="js"></h:outputScript>
+	<ui:insert name="css" />
+	<title>#{msg.general_title}</title>
+</h:head>
+
+<h:body>
+	<ui:insert name="header">
+		<ui:include src="/WEB-INF/templates/default/header.xhtml" />
+	</ui:insert>
+	<h:panelGroup layout="block" id="contentBox">
+		<ui:insert name="box">
+		</ui:insert>
+	</h:panelGroup>
+</h:body>
+
+</html>

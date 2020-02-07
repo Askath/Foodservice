@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:body>
+	<ui:composition template="/WEB-INF/templates/default/default.xhtml">
+
+		<ui:define name="box">
+			<h:panelGroup layout="block" styleClass="card orderStatusCard"
+				rendered="#{loginStatus.redirectWhenNotLoggedIn()}">
+				<h:panelGroup layout="block" styleClass="CardHeader">#{msg.general_title_status}</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="padding">
+					
+						<h:outputText
+							value="Essen wurde um #{watch.formatDateToString(orderStatusManagedBean.orderprocess.deliveredtime)} Uhr geliefert. Guten Hunger!"
+							rendered="#{orderStatusManagedBean.delivered and not orderStatusManagedBean.orderprocess.aborted}"
+							class="padding" />
+						<h:outputText value="Bestellung wurde abgebrochen!"
+							rendered="#{orderStatusManagedBean.orderprocess.aborted}"
+							class="padding" />
+						<h:form>
+							<h:commandButton action="admin/startOrder.xhtml"
+								value="Neue Bestellung starten"
+								rendered="#{orderStatusManagedBean.delivered and loginStatus.admin}"
+								class="button startNewOrderButton" />
+						</h:form>
+					
+					<br></br>
+					<h4 class="padding" id="tableHeaderLine">Sie haben bestellt:</h4>
+					<h:panelGroup rendered="#{loginStatus.admin}">
+						<h4 class="padding">Gesamtsumme: #{orderManagedBean.sum/100} €</h4>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{!loginStatus.admin}">
+						<h4 class="padding">Gesamtsumme:
+							#{orderManagedBean.getSumForUser(loginStatus.currentUser)/100} €</h4>
+					</h:panelGroup>
+					<br></br>
+					<h:panelGroup class="TableContainer" layout="block"
+						style="padding: 2%; box-sizing: border-box;">
+						<h:panelGroup layout="block" id="orderStatusTable">
+							<h:dataTable
+								value="#{orderManagedBean.getOrderListOfUser(loginStatus.currentUser)}"
+								var="o" styleClass="orderTable" headerClass="orderTableHeader"
+								rowClassess="orderTableOddRow,orderTableEvenRow"
+								rendered="#{!loginStatus.admin and orderManagedBean.getOrderListOfUser(loginStatus.currentUser).size() gt 0}">
+								<h:column>
+									<f:facet name="header">Name</f:facet>
+									#{o.user.initials}
+								</h:column>
+								<h:column>
+									<f:facet name="header">Essen</f:facet>
+									#{o.food}
+								</h:column>
+								<h:column>
+									<f:facet name="header">Preis</f:facet>
+									#{o.price/100} €
+								</h:column>
+								<h:column>
+									<f:facet name="header">Anmerkung</f:facet>
+									#{o.other}
+								</h:column>
+							</h:dataTable>
+							<h:form>
+							<h:outputText value="Geld von Mitbestellern, dessen Namen Rot angezeigt wird, wird NICHT von der Kasse ausgezahlt!" style="color: red;" rendered="#{loginStatus.admin and orderStatusManagedBean.waitingForDelivery}"/>
+								<p:dataTable value="#{orderManagedBean.orderList}" var="o"
+									styleClass="orderTable" headerClass="orderTableHeader"
+									rowClassess="orderTableOddRow,orderTableEvenRow"
+									editable="true"
+									rendered="#{loginStatus.admin and orderManagedBean.orderList.size() gt 0}">
+
+									<p:ajax event="rowEdit"
+										listener="#{orderManagedBean.onRowEdit}" />
+									<p:ajax event="rowEditCancel"
+										listener="#{orderManagedBean.onRowCancel}" />
+
+									<p:column>
+										<f:facet name="header">Name</f:facet>
+									<h:outputText value="#{o.user.initials}" rendered="#{o.user.bank}"/>
+									<h:outputText value="#{o.user.initials}" rendered="#{!o.user.bank}" style="color: red;"/>
+								</p:column>
+									<p:column>
+										<f:facet name="header">Essen</f:facet>
+
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{o.food}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{o.food}" style="width:100%" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									<p:column>
+										<f:facet name="header">Preis</f:facet>
+
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{o.price/100} €" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{o.price}" style="width:100%" />
+											</f:facet>
+										</p:cellEditor>
+
+									</p:column>
+									<p:column>
+										<f:facet name="header">Anmerkung</f:facet>
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{o.other}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{o.other}" style="width:100%" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									<p:column style="width:32px">
+										<p:rowEditor />
+									</p:column>
+								</p:dataTable>
+								<h:outputText value="Anzahl der Bestellungen: #{orderManagedBean.orderList.size()}" rendered="#{loginStatus.admin}"/>
+							</h:form>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+
+			</h:panelGroup>
+			<h:form>
+				<p:poll interval="4"
+					listener="#{orderStatusPhase.isOrderStatusPhase()}"
+					rendered="#{!loginStatus.admin}"></p:poll>
+			</h:form>
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+
+</html>

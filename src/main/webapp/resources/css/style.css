@@ -1,0 +1,296 @@
+* {
+  font-family: Verdana;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.center {
+  margin: 0px auto;
+}
+.hidden {
+  display: none;
+}
+.inline {
+  display: inline;
+}
+.errorCode {
+  color: #ff0000;
+}
+.seperator50 {
+  width: 80%;
+  text-align: left;
+  margin-left: -10%;
+}
+
+body
+{
+	background-image: url("#{resource['img/LoginScreenBG.jpg']}");
+}
+
+.CardHeader
+{
+	text-align: center;
+	font-weight: 700;
+	font-size: 18pt;
+	background-color: #1987cb;
+	height: 10%;
+	width: 100%;
+	color: white;
+	border-radius: 15px 15px 0px 0px;
+}
+
+.card
+{
+	background-color: white;
+	border-radius: 15px;
+}
+
+.login
+{
+	width: 24%;
+  margin-top: 5%;
+}
+
+.form
+{
+	padding: 4%;
+}
+
+.panelGrid td
+{
+	border:none;
+}
+
+.foodplanHeader
+{
+	border-radius: 0px;
+	height: 6%;
+}
+
+.registerUser
+{
+	width: 24%;
+}
+
+.button
+{
+	background-color: #1987cb!important;
+	border-color: #1987cb!important;
+}
+
+.button:hover
+{
+	background-color: #1FAAFF!important;
+	border-color: #1FAAFF!important;
+}
+
+.forgotPassword
+{
+	width: 24%;
+}
+
+#contentBox {
+	display: flex;
+	justify-content: center;
+	align-items:center;
+	width:100%;
+}
+
+#foodplanBox
+{
+	width: 100%;
+	height: 100vh;
+}
+
+.foodplanFrame {
+  height: 87vh;
+  width: 100%;
+}
+
+.orderStatusCard
+{
+	width: 60%;
+	height: 100%;
+}
+
+.voteCard
+{
+	width: 80%;
+}
+
+.foodplansNavigation {
+  width: 100%;
+  height: 59px;
+  background-color: #1987cb;
+}
+
+.foodplansNavigation td:hover
+{
+	background-color: #1FAAFF;
+}
+
+.foodplansNavigation .button {
+  height: 100%;
+  background-color: #1987cb;
+  border:none;
+}
+
+.foodplansNavigation td
+{
+	text-align: center;
+}
+
+.padding
+{
+	padding: 2%;
+}
+
+.bargraph {
+  list-style: none;
+  padding-top: 20px;
+  width: 65%;
+  text-align: left;
+  margin-left: 10%;
+  box-sizing: border-box;
+  margin-top: 2%;
+}
+.barButton {
+  height: 35px;
+  position: absolute;
+  border-radius: 0px;
+}
+.abortButton {
+  height: 35px;
+  width: 100px;
+  position: absolute;
+  border-radius: 0px;
+  color: #ff0000;
+}
+ul.bargraph li {
+  height: 38px;
+  color: #ffffff;
+  text-align: left;
+  font-style: italic;
+  font-weight: bolder;
+  font-size: 14px;
+  line-height: 35px;
+  margin-bottom: 0px;
+  width: 50%;
+  background: #10B200;
+}
+.removeVoteButton {
+  border-radius: 0 0 10px 10px;
+  width: 50%;
+}
+
+.createOrderCard
+{
+	width: 60%;
+}
+
+.orderCard {
+  text-align: center;
+  width: 100%;
+  margin: 0px auto;
+}
+.inputFieldOrder {
+  outline: none;
+  width: 100%;
+  background-color: #fcfcfc;
+  border: none;
+  border-bottom: 1px solid #757575;
+  height: 100%;
+  font-size: 16pt;
+}
+.inputFieldOrder:FOCUS {
+  background-color: white;
+}
+#addOrderForm {
+  width: 100%;
+  float: left;
+  margin-left: 2%;
+}
+#foodplan {
+  width: 48%;
+  float: right;
+  height: 700px;
+}
+#foodplan iframe {
+  border: none;
+  height: 100%;
+  width: 100%;
+}
+@media (max-width: 1100px) {
+  #foodplan {
+    width: 100%;
+  }
+}
+#foodplay img {
+  height: 100%;
+  width: 100%;
+}
+.addButton {
+  width: 100%;
+  margin-left: 10px;
+}
+.orderTable {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  padding-right: 2%;
+}
+.orderTable td {
+  padding: 10px;
+  padding-left: 0;
+  text-align: left;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.orderTable thead {
+  border-bottom: 1px solid #757575;
+}
+.orderTable tbody tr:HOVER {
+  background-color: rgba(166, 162, 154, 0.3);
+}
+.orderTableHeader {
+  width: 25%;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+.formContainer {
+  width: 50%;
+  float: left;
+}
+@media (max-width: 1100px) {
+  .formContainer {
+    width: 100%;
+  }
+}
+.attachedFoodPlan {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+@media (max-width: 1100px) {
+  .attachedFoodPlan {
+    display: block;
+  }
+}
+
+.ui-timepicker-table td a {
+		width: auto!important;
+}
+
+.resetPasswordCard
+{
+		width: 25%;
+}
+
+.activationCard
+{
+	width: 30%;
+}

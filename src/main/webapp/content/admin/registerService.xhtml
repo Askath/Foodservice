@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+   <ui:composition template="/WEB-INF/templates/default/default.xhtml">
+   
+   	<ui:define name="box">
+   		<h:panelGroup layout="block" styleClass="card registerCard" rendered="#{loginStatus.redirectWhenNotLoggedIn()}">
+   			<h:panelGroup layout="block" styleClass="CardHeader" style="font-size: 18pt;">Lieferservice hinzufügen</h:panelGroup>
+			<br></br>
+			<h:form styleClass="form">
+			<h:panelGrid columns="1" styleClass="panelGrid">
+			
+				<h:inputText name="food" id="food" a:placeholder="Name" value="#{registerServiceManagedBean.name}"
+					required="true" requiredMessage="Bitte geben sie einen gütligen Namen an (min. 4 Zeichen)">
+				</h:inputText>
+								
+				<h:inputText name="link" a:placeholder="Link" value="#{registerServiceManagedBean.link}"
+					>
+				</h:inputText>
+				
+				<h:inputText name="telephone" id="telephone" a:placeholder="Telefonnummer" value="#{registerServiceManagedBean.telephone}"
+					required="true" requiredMessage="Bitte geben sie eine gültige Telefonnummer ein">
+				</h:inputText>
+				
+				<h:inputText name="price" id="price" a:placeholder="Mindestbestellwert" value="#{registerServiceManagedBean.minorderprice}"
+					required="true" requiredMessage="Bitte geben sie einen Mindestbestellwert ein">
+				</h:inputText>
+
+				<h:messages  style="color: red;" rendered="#{not telephone.valid or not food.valid}"/>
+									
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Von Abstimmung ausschließen" for="checkbox"/>
+					<h:selectBooleanCheckbox value="#{registerServiceManagedBean.excluded}" id="checkbox"/>
+				</h:panelGrid>
+
+			<h:commandButton action="#{registerServiceManagedBean.registerService()}" value="Hinzufügen" class="button" />
+			</h:panelGrid>
+		</h:form>
+   		</h:panelGroup>
+   	</ui:define>
+   	
+   </ui:composition>
+   
+</html>

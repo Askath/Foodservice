@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition>
+	<h:panelGroup layout="block" styleClass="header">
+		<h:panelGroup styleClass="title" style="margin-left: 2%;">
+			<h:outputText value=" #{msg.general_title}: #{watch.dateString}" />
+		</h:panelGroup>
+		<h:form style="margin-bottom:0;">
+			<ul>
+
+				<h:panelGroup rendered="#{loginStatus.loggedIn}">
+					<li>
+						<h:commandLink action="#{loginStatus.logout()}"
+							value="#{msg.button_logout}" />
+
+					</li>
+				</h:panelGroup>
+
+				<h:panelGroup
+					rendered="#{loginStatus.admin and empty orderStatusManagedBean.orderprocess.deliveredtime}">
+					<li>
+						<h:commandLink actionListener="#{process.abortOrderprocess()}"
+							value="#{msg.button_abort_order}" />
+					</li>
+				</h:panelGroup>
+
+				<h:panelGroup
+					rendered="#{loginStatus.admin and votePhase.votePhase}">
+					<li>
+						<h:commandLink actionListener="#{votePhase.timeOver(true)}"
+							value="#{msg.button_abort_phase}"></h:commandLink>
+					</li>
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{loginStatus.admin and orderPhase.orderPhase}">
+					<li>
+						<h:commandLink actionListener="#{orderPhase.timeOver(true)}"
+							value="#{msg.button_abort_phase}"></h:commandLink>
+					</li>
+				</h:panelGroup>
+			</ul>
+		</h:form>
+
+	</h:panelGroup>
+	<h:panelGroup layout="block" id="headerTime"
+		rendered="#{votePhase.started or orderPhase.started}">
+		<h:panelGroup>
+			<h:panelGroup layout="block">
+				<h:outputText value="#{msg.header_time_remaining_time}" />
+			</h:panelGroup>
+			<h5>
+				<h:outputLabel value="" id="label" rendered="#{votePhase.started}" />
+				<h:outputLabel value="" id="label2" rendered="#{orderPhase.started}" />
+
+			</h5>
+			<h:panelGroup rendered="#{votePhase.started}">
+				<h:form>
+					<p:remoteCommand name="isPhaseOver"
+						actionListener="#{votePhase.timeOver(false)}"></p:remoteCommand>
+					<script>
+				initializeClock('label', new Date(#{votePhase.timerEnd.time}), new Date(#{votePhase.timerStarted.time}), new Date(#{process.getCurrentTime().time}));
+			</script>
+				</h:form>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{orderPhase.started}">
+				<h:form>
+					<p:remoteCommand name="isPhaseOver"
+						actionListener="#{orderPhase.timeOver(false)}"></p:remoteCommand>
+
+					<script>
+				initializeClock('label2', new Date(#{orderPhase.timerEnd.time}), new Date(#{orderPhase.timerStarted.time}), new Date(#{process.getCurrentTime().time}));
+			</script>
+				</h:form>
+			</h:panelGroup>
+		</h:panelGroup>
+	</h:panelGroup>
+</ui:composition>
+</html>

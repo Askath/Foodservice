@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/default/default.xhtml">
+	<ui:define name="box">
+		<h:panelGroup layout="block" class="card voteCard" id="voteCard"
+			rendered="#{loginStatus.redirectWhenNotLoggedIn()}">
+			<h:panelGroup layout="block" class="CardHeader">
+				  #{msg.general_title_vote}
+			</h:panelGroup>
+			<h:form style="text-align: center;">
+				<h:commandButton
+					action="#{voteManagedBean.removeVote(loginStatus.currentUser)}"
+					styleClass="button" value="#{msg.button_withdraw_vote}"
+					class="button removeVoteButton"
+					rendered="#{voteManagedBean.currentUserHasVoted()}">
+				</h:commandButton>
+			</h:form>
+			<ul class="bargraph">
+				<h3>#{msg.label_deliveryService}</h3>
+
+				<h:form id="torefresh_std">
+
+					<ui:repeat value="#{voteManagedBean.getServicesToVote()}" var="service">
+					 	#{service.name}:
+					 <ui:repeat value="#{service.votes}" var="vote">
+							<span>&nbsp;#{vote.user.initials}</span>
+						</ui:repeat>
+
+						<ui:fragment rendered="#{service.votes.size() gt 0}">
+							<li
+								style="width:#{5 + ((100 / voteManagedBean.voteList.size())*service.votes.size())/2}%"
+								name="#{service.name}">
+								&nbsp;#{service.votes.size()}
+								<span style="float: right;">
+									<h:commandButton
+										action="#{voteManagedBean.vote(loginStatus.currentUser, service)}"
+										value="#{msg.button_vote}" class="button barButton"
+										rendered="#{voteManagedBean.currentUserHasVoted() eq false}">
+									</h:commandButton>
+								</span>
+							</li>
+
+						</ui:fragment>
+						<ui:fragment rendered="#{service.votes.size() eq 0}">
+
+							<li style="width: 5%" name="#{service.name}">
+								&nbsp;#{service.votes.size()}
+								<span style="float: right;">
+									<h:commandButton
+										action="#{voteManagedBean.vote(loginStatus.currentUser, service)}"
+										value="#{msg.button_vote}" class="button barButton"
+										rendered="#{voteManagedBean.currentUserHasVoted() eq false}">
+									</h:commandButton>
+								</span>
+							</li>
+						</ui:fragment>
+
+					</ui:repeat>
+				</h:form>
+				<div>
+					<h3>#{msg.label_other}</h3>
+					<h:form>
+						<h:commandLink action="#" value="#{msg.button_foodplans}"
+							onclick="window.open('../foodplans.xhtml');" />
+						<h:commandLink style="margin-left: 2%;" action="#"
+							value="#{msg.button_currentWeather}"
+							onclick="window.open('http://www.wetter.de/deutschland/wetter-dortmund-aplerbeck-20018220926/wetterbericht-aktuell.html#vorhersage-mittags-1200');" />
+					</h:form>
+
+				</div>
+
+				<h:form id="torefresh_sonst">
+
+					<ui:repeat value="#{voteManagedBean.excludedServices}"
+						var="service">
+					 	#{service.name}:
+					 <ui:repeat value="#{service.votes}" var="vote">
+							<span>&nbsp;#{vote.user.initials}</span>
+						</ui:repeat>
+
+						<ui:fragment rendered="#{service.votes.size() gt 0}">
+							<li
+								style="width:#{5+((100 / voteManagedBean.voteList.size())*service.votes.size())/2}%"
+								name="#{service.name}">
+								&nbsp;#{service.votes.size()}
+								<span style="float: right;">
+									<h:commandButton
+										action="#{voteManagedBean.vote(loginStatus.currentUser, service)}"
+										value="#{msg.button_vote}" class="button barButton"
+										rendered="#{voteManagedBean.currentUserHasVoted() eq false}">
+									</h:commandButton>
+								</span>
+							</li>
+
+						</ui:fragment>
+						<ui:fragment rendered="#{service.votes.size() eq 0}">
+
+							<li style="width: 5%" name="#{service.name}">
+								&nbsp;#{service.votes.size()}
+								<span style="float: right;">
+									<h:commandButton
+										action="#{voteManagedBean.vote(loginStatus.currentUser, service)}"
+										value="#{msg.button_vote}" class="button barButton"
+										rendered="#{voteManagedBean.currentUserHasVoted() eq false}">
+									</h:commandButton>
+								</span>
+							</li>
+						</ui:fragment>
+
+					</ui:repeat>
+				</h:form>
+
+			</ul>
+		</h:panelGroup>
+
+		<h:form>
+			<p:poll interval="5" listener="#{votePhase.isRunning()}"
+				update="torefresh_std torefresh_sonst"></p:poll>
+		</h:form>
+		<p:dialog header="Buscheplan" widgetVar="Buschedialog">
+			<p:media value="resources/img/busche.pdf" width="100%" height="100%"></p:media>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+
+</html>

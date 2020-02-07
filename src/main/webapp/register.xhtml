@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/default/default.xhtml">
+
+	<ui:define name="box">
+		<h:panelGroup layout="block" class="card registerUser">
+			<h:panelGroup layout="block" class="CardHeader">#{msg.general_title_createUser}</h:panelGroup>
+			<br></br>
+			<h:form styleClass="form">
+				<h:panelGrid columns="1" styleClass="panelGrid">
+					<h:messages style="color: red;"/>
+					<h:inputText id="user" a:placeholder="#{msg.form_placeholder_name}"
+						value="#{registrationManagedBean.username}" required="true"
+						requiredMessage="#{msg.error_input_please_input_name}">
+					</h:inputText>
+					<h:inputText id="email" a:placeholder="#{msg.form_placeholder_email}"
+						value="#{registrationManagedBean.email}" required="true"
+						requiredMessage="#{msg.error_input_please_input_email}">
+					</h:inputText>
+					<h:inputSecret id="passwordone" a:placeholder="#{msg.form_placeholder_password}"
+						value="#{registrationManagedBean.password}" required="true"
+						requiredMessage="#{msg.error_input_please_input_password}">
+					</h:inputSecret>
+
+					<h:inputSecret name="passwordtwo" id="passwordtwo"
+						a:placeholder="#{msg.form_placeholder_repeatPassword}"
+						value="#{registrationManagedBean.passwordrep}"
+						requiredMessage="#{msg.error_input_please_input_password}" />
+
+				</h:panelGrid>
+
+					#{msg.form_label_usesBank} <h:selectBooleanCheckbox
+					value="#{registrationManagedBean.usesBank}" />
+
+
+				<br></br>
+				<br></br>
+
+				<h:commandButton action="#{registrationManagedBean.register()}"
+					value="#{msg.button_createUser}" class="button" id="registerButton">
+					<p:ajax process="@form" update="@form"></p:ajax>
+				</h:commandButton>
+			</h:form>
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" class="overlay hidden" id="loading">
+
+			<h:panelGroup layout="block" class="loader" id="loader">
+				<span class="ball"></span>
+				<span class="ball2"></span>
+				<ul>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</h:panelGroup>
+		</h:panelGroup>
+
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

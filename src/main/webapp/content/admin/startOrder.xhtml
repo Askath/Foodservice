@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/default/default.xhtml">
+
+	<ui:define name="box">
+		<h:panelGroup layout="block" class="card createOrderCard" rendered="#{loginStatus.redirectWhenNotLoggedIn()}">
+			<h:panelGroup layout="block" class="CardHeader">Bestellvorgang starten</h:panelGroup>
+			<p style="text-align: center;">Bitte wählen Sie die verfügbaren Lieferdienste aus.</p>
+			<h:form style="padding: 5%; text-align: center;" id="checkBoxForm">
+				<h:messages style="list-style: none; color: red;" />
+				<p:selectManyCheckbox id="checkboxes" name="checkboxes"
+					layout="grid" columns="3"
+					value="#{startOrderManagedBean.selectedServices}"
+					style="margin: 0px auto; width: 50%;" required="true"
+					requiredMessage="Bitte wählen sie mindestens einen Lieferdienst aus">
+					<c:forEach items="#{startOrderManagedBean.foodserviceSelect}"
+						var="f">
+						<f:selectItem itemValue="#{f.name}" itemLabel="#{f.name}" />
+					</c:forEach>
+				</p:selectManyCheckbox>
+
+
+
+				<br />
+				<br />
+				<br />
+
+				<h:outputLabel value="Essen wird abgeholt/angenommen von:" />&nbsp;
+				<h:inputText value="#{startOrderManagedBean.reciept}"
+					 style="width: 10%;" />
+
+				<h:outputLabel value="Zeit in Minuten pro Phase" />&nbsp;
+				<h:inputText value="#{startOrderManagedBean.phasetime}"
+					 style="width: 10%;" />
+
+				<br />
+				<br></br>
+
+				<h:commandButton
+					action="#{startOrderManagedBean.createNewOrder(loginStatus.currentUser)}"
+					value="Bestellprozess starten" class="button" />
+			</h:form>
+			<h:form style="text-align: center;">
+				<h:panelGrid columns="1" style="margin: 0px auto; width: 30%; text-align: center;">
+					<h:commandLink action="registerService.xhtml"
+						value="Neuen Lieferdienst hinzufügen" />
+					<h:commandLink action="settings.xhtml?faces-redirect=true"
+						value="Weitere einstellungen" />
+				</h:panelGrid>
+			</h:form>
+		</h:panelGroup>
+	</ui:define>
+
+</ui:composition>
+
+</html>

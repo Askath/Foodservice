@@ -1,0 +1,57 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="WEB-INF/templates/default/default.xhtml">
+	
+	<ui:define name="box">
+	
+		<h:panelGroup layout="block" class="card login"
+			rendered="#{!loginStatus.redirectWhenLoggedIn()}">
+			<h:panelGroup layout="block" class="CardHeader">#{msg.index_header}</h:panelGroup>
+			<h:form styleClass="form">
+
+				<h:panelGrid columns="1" styleClass="panelGrid">
+					<h:messages style="color: red;" />
+					<h:inputText name="user" id="user"
+						a:placeholder="#{msg.form_placeholder_name}"
+						value="#{loginManagedBean.username}" required="true"
+						requiredMessage="#{msg.error_input_please_input_name}" />
+
+					<h:inputSecret name="password" id="password"
+						a:placeholder="#{msg.form_placeholder_password}" required="true"
+						value="#{loginManagedBean.password}" type="password"
+						requiredMessage="#{msg.error_input_please_input_password}" />
+					<h:outputLink style="margin: 5%;"
+						value="register.xhtml?faces-redirect=true">
+							#{msg.create_user_link}
+						</h:outputLink>
+					<h:outputLink style="margin: 5%;"
+						value="resetPassword/forgottPassword.xhtml?faces-redirect=true">
+							#{msg.forgot_password_link}
+						</h:outputLink>
+					<h:commandLink style="margin: 5%;"
+						onclick="window.open('foodplans.xhtml');"
+						value="#{msg.index_link_foodplans}" id="foodplanButton">
+						<f:ajax render="@none" execute="@none">
+						</f:ajax>
+					</h:commandLink>
+					<h:commandButton action="#{loginManagedBean.login()}"
+						value="#{msg.button_login}" class="button" />
+				</h:panelGrid>
+			</h:form>
+		</h:panelGroup>
+	</ui:define>
+
+
+</ui:composition>
+
+</html>

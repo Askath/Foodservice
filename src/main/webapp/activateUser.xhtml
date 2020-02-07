@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+<ui:composition template="/WEB-INF/templates/default/default.xhtml">
+
+	<ui:define name="box">
+		<h:panelGroup layout="block"
+			styleClass="card activationCard">
+			<h:panelGroup layout="block" class="CardHeader">#{msg.general_title_activateUser}</h:panelGroup>
+			<br></br>
+			<f:metadata>
+				<f:viewParam name="token" value="#{activateUserManagedBean.token}"></f:viewParam>
+			</f:metadata>
+
+			<h:panelGroup layout="block" style="padding: 2%; width:100%;">
+				<c:choose>
+					<c:when test="#{activateUserManagedBean.activate()}">
+						<h:outputText value="#{msg.note_userActivated}" style="" />
+					</c:when>
+					<c:otherwise>
+						<h:outputText
+							value="#{msg.note_userAlreadyActivated}" />
+					</c:otherwise>
+				</c:choose>
+			</h:panelGroup>
+
+
+			<h:form styleClass="form">
+				<h:commandLink action="index.xhtml" value="#{button_backToLogin}" />
+			</h:form>
+			<br></br>
+		</h:panelGroup>
+	</ui:define>
+
+
+</ui:composition>
+</html>

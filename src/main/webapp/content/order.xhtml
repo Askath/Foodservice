@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/WEB-INF/templates/default/default.xhtml">
+
+	<ui:define name="box">
+		<h:panelGroup layout="block" styleClass="card orderCard"
+			rendered="#{loginStatus.redirectWhenNotLoggedIn()}">
+			<h:panelGroup layout="block" class="CardHeader">Heute wird bei #{orderManagedBean.votedService.name} bestellt.
+   				</h:panelGroup>
+			<h:panelGroup styleClass="formContainer">
+				<h:form id="addOrderForm" style="text-align: right;">
+					<br></br>
+					<h3 style="text-align: left;">Gericht hinzufügen</h3>
+					<h:panelGrid columns="5" styleClass="panelGrid">
+
+						<h:inputText name="user" style="width: 80%;"
+							value="#{loginStatus.currentUser.initials}" readonly="true"
+							disabled="true" />
+
+						<h:inputText name="user" id="food" a:placeholder="Essen"
+							value="#{orderManagedBean.food}" maxlength="50" required="true"
+							requiredMessage="Bitte geben sie einen gültigen Namen ein"></h:inputText>
+
+						<h:inputText name="user" id="price" a:placeholder="Preis"
+							maxlength="5" required="true"
+							requiredMessage="Bitte geben sie einen gültigen Preis ein"
+							value="#{orderManagedBean.priceString}">
+						</h:inputText>
+
+						<h:inputText name="user" maxlength="40"
+							a:placeholder="Anmerkungen" value="#{orderManagedBean.other}"></h:inputText>
+
+						<h:commandButton
+							action="#{orderManagedBean.addOrder(loginStatus.currentUser)}"
+							value="Hinzufügen" class="button">
+							<f:ajax execute="@form" render="table addOrderForm" />
+						</h:commandButton>
+					</h:panelGrid>
+					<h:messages style="color: red; text-align: left;"/>
+				</h:form>
+				<br></br>
+				<br></br>
+				<h:panelGroup id="minordervalue"
+					style="text-align: left; margin-top: 10%; margin-left: 2%; width: 57%;">
+
+					<h3>Derzeitige Bestellungen:</h3>
+					<h:outputText
+						value="Der Mindestbestellwert von #{orderManagedBean.votedService.minorderprice / 100} € wurde noch nicht erreicht!"
+						style="color: red;"
+						rendered="#{orderManagedBean.reachedMinOrderPrice}" />
+				</h:panelGroup>
+				<br></br>
+				<h:panelGroup id="reciept">
+					<h:outputLabel value="Essen wird Angenommen/Abgeholt von: #{orderManagedBean.reciept}" rendered="#{not empty orderManagedBean.reciept}"/>
+					<h:outputLabel value="Essen wird Angenommen/Abgeholt von:" rendered="#{empty orderManagedBean.reciept}"/>
+					<h:commandButton action="#{orderManagedBean.appointReciept(loginStatus.currentUser)}" value="Ich melde mich freiwillig" class="button" rendered="#{empty orderManagedBean.reciept}">
+					<f:ajax execute="@form" render="reciept" />
+				</h:commandButton>
+				</h:panelGroup>
+				<h:panelGroup layout="block"
+					style=" width: 100%; padding: 2%; box-sizing: border-box;"
+					id="table">
+					<h:dataTable
+						value="#{orderManagedBean.getOrderList(loginStatus.currentUser)}"
+						var="o" styleClass="orderTable" headerClass="orderTableHeader"
+						rowClassess="orderTableOddRow,orderTableEvenRow">
+						<h:column>
+							<f:facet name="header">Name</f:facet>
+								#{o.user.initials}
+							</h:column>
+						<h:column>
+							<f:facet name="header">Essen</f:facet>
+								#{o.food}
+							</h:column>
+						<h:column>
+							<f:facet name="header">Preis</f:facet>
+							<span>#{o.price/100} €</span>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Anmerkung</f:facet>
+								#{o.other}
+							</h:column>
+						<h:column>
+							<f:facet name="header">Aktion</f:facet>
+							<h:form style="margin-bottom: 0px;">
+								<h:commandButton
+									rendered="#{orderManagedBean.isSameUser(o.user.initials, loginStatus.currentUser)}"
+									action="#{orderManagedBean.deleteOrder(o)}"
+									image="#{orderManagedBean.serverAdress}/img/cross.png"
+									style="height:16px; width: 16px;" />
+							</h:form>
+						</h:column>
+					</h:dataTable>
+				</h:panelGroup>
+			</h:panelGroup>
+			<h:panelGroup layout="block" id="foodplan">
+				<iframe
+					src="#{orderManagedBean.serverAdress}/img/#{orderManagedBean.votedService.link}"></iframe>
+			</h:panelGroup>
+		</h:panelGroup>
+		<h:form>
+			<p:poll interval="4" listener="#{orderPhase.isRunning()}"
+				update="table minordervalue" />
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

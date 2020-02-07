@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+	<head>
+        <title>Session expired</title>
+        <meta http-equiv="refresh" content="0;url=#{request.contextPath}/index.xhtml" />
+    </head>
+    <body>
+        <h1>Session expired</h1>
+        <h3>You will be redirected to login page</h3>
+        <p><a href="#{request.contextPath}/index.xhtml">Click here if redirect didn't work or when you're impatient</a>.</p>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core">
+
+   <h:body>
+   		<ui:composition template="/WEB-INF/templates/default/default.xhtml">
+   		
+   			<ui:define name="box">
+   				<h:panelGroup layout="block" class="card orderStatusCard" rendered="#{loginStatus.redirectWhenNotLoggedIn()}">
+   					<h:panelGroup layout="block" class="CardHeader">Kein Bestellprozess im Gang</h:panelGroup>
+				<p style="margin-left: 2%;">
+					Derzeit ist keine Bestellung im gang.
+				<h:outputLabel value="Meine Letzte Bestellung: " />
+				</p>
+				<h:form style="Display: inline-block;">
+					<h:commandButton action="orderStatus.xhtml" value="Letzte Bestellung anzeigen" class="button"/>
+				</h:form>
+   				</h:panelGroup>
+   			</ui:define>
+   		
+   		</ui:composition>
+   </h:body>
+   
+</html>
